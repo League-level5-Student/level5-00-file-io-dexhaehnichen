@@ -44,15 +44,29 @@ public class ToDoList implements ActionListener {
 	JButton save = new JButton("Save Tasks");
 	JButton load = new JButton("Load Tasks");
 	ArrayList<String> taskList = new ArrayList<String>();
-
+	String saveLocation = "src\\_03_To_Do_List\\save.txt";
+	
 	public static void main(String[] args) {
 		ToDoList tdl = new ToDoList();
 		tdl.run();
 	}
-
+	
+	
 	void run() {
 		initializeUI();
-
+		try {
+			BufferedReader br = new BufferedReader(new FileReader("src\\_03_To_Do_List\\location.txt"));
+			String line = br.readLine();
+			if (line != null) {
+				saveLocation = line;
+			}
+			br.close();
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		load(saveLocation);
 	}
 
 	void initializeUI() {
@@ -93,8 +107,12 @@ public class ToDoList implements ActionListener {
 	void save(String location) {
 		try {
 			FileWriter fw = new FileWriter(location);
+			
+			FileWriter locW = new FileWriter("src\\_03_To_Do_List\\location.txt");
+			locW.write(location);
+			
 			for (int i = 0; i < taskList.size(); i++) {
-				fw.write(taskList.get(i));
+				fw.write(taskList.get(i) + "\n");
 			}
 			fw.close();
 		} catch (IOException e) {
