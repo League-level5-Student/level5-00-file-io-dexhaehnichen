@@ -68,3 +68,7 @@ public class FileEncryptor {
 		return "&";
 	}
 }
+
+
+
+//Copyright © 2019 FirstName LastName

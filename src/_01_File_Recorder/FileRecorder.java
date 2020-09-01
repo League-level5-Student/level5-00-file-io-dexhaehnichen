@@ -19,3 +19,7 @@ public class FileRecorder {
 		}
 	}
 }
+
+
+
+//Copyright © 2019 FirstName LastName

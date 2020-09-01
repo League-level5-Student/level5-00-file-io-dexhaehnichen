@@ -1,6 +1,8 @@
 package _04_Directory_Iteration;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
@@ -16,13 +18,14 @@ public class DirectoryIterator {
 		jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 		int returnVal = jfc.showOpenDialog(null);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			File directory = jfc.getSelectedFile();
-			File[] files = directory.listFiles();
-			if(files != null) {
-				for(File f : files) {
-				  System.out.println(f.getAbsolutePath());
-				}
-			}
+			getSubDirectories(jfc.getSelectedFile());
+//			File directory = jfc.getSelectedFile();
+//			File[] files = directory.listFiles();
+//			if(files != null) {
+//				for(File f : files) {
+//				  System.out.println(f.getAbsolutePath());
+//				}
+//			}
 		}
 		
 		
@@ -34,4 +37,25 @@ public class DirectoryIterator {
 		 * (e.g //Copyright © 2019 FirstName LastName)
 		 */
 	}
+	
+	public static void getSubDirectories(File path) {
+		File[] files = path.listFiles();
+		if(files != null) {
+			for(File f : files) {
+			  getSubDirectories(f.getAbsoluteFile());
+			}
+		}else {
+			try {
+				FileWriter fw = new FileWriter(path.getAbsolutePath(), true);
+				fw.write("\n\n\n//Copyright © 2019 FirstName LastName");					
+				fw.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }
+
+
+
+//Copyright © 2019 FirstName LastName
